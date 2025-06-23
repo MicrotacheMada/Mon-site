@@ -1,147 +1,88 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tableau de bord</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .nav-toggle {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-    }
-    .drawer {
-      position: fixed;
-      top: 0;
-      right: -250px;
-      width: 250px;
-      height: 100%;
-      background: #ffffff;
-      box-shadow: -2px 0 5px rgba(0,0,0,0.2);
-      padding: 2rem 1rem;
-      transition: right 0.3s ease;
-      z-index: 1000;
-    }
-    .drawer.open {
-      right: 0;
-    }
-    .drawer ul {
-      list-style: none;
-      padding: 0;
-    }
-    .drawer ul li {
-      margin: 1rem 0;
-    }
-    .drawer ul li a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Menu avec contenu dynamique</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  nav {
+    background: #333;
+    padding: 10px;
+  }
+  nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+  }
+  nav ul li {
+    margin-right: 20px;
+  }
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+  .content {
+    margin-top: 20px;
+  }
+</style>
 </head>
-
-  <script>
-  
 <body>
-  <button class="nav-toggle" onclick="toggleDrawer()">Menu</button>
-  <div class="drawer" id="navDrawer">
-    <ul>
-      <li><a href="#">Formation</a></li>
-      <li><a href="register.html">Création Compte</a></li>
-      <li><a href="#">Proxy</a></li>
-      <li><a href="#">Numéro Virtuel</a></li>
-      <li><a href="#">Admis</a></li>
-    </ul>
-  </div>
 
-  <div class="container">
-    <h2>Bienvenue, <span id="userName"></span> !</h2>
-    <p>Vous êtes connecté.</p>
-    <button onclick="logoutUser()">Déconnexion</button>
-  </div>
-  <div class="drawer" id="navDrawer">
+<nav>
   <ul>
-    <li>
-      <a href="#" onclick="toggleSubMenu('platformMenu')">Formation ▾</a>
-      <ul id="platformMenu" style="display:none; list-style:none; padding-left:1rem;">
-        <li><a href="#" onclick="selectPlatform('Timebucks')">Timebucks</a></li>
-        <li><a href="#" onclick="selectPlatform('Microworkers')">Microworkers</a></li>
-        <li><a href="#" onclick="selectPlatform('Sproutgigs')">Sproutgigs</a></li>
-        <li><a href="#" onclick="selectPlatform('Seosprint')">Seosprint</a></li>
-        <li><a href="#" onclick="selectPlatform('Socpublic')">Socpublic</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#" onclick="toggleSubMenu('countryMenu')">Pays ▾</a>
-      <ul id="countryMenu" style="display:none; list-style:none; padding-left:1rem;">
-        <!-- Pays dynamiques ici -->
-      </ul>
-    </li>
-    <li><a href="register.html">Création Compte</a></li>
-    <li><a href="#">Proxy</a></li>
-    <li><a href="#">Numéro Virtuel</a></li>
-    <li><a href="#">Admis</a></li>
+    <li><a onclick="showContent('formation')">Formation</a></li>
+    <li><a onclick="showContent('creation')">Création compte</a></li>
+    <li><a onclick="showContent('contact')">Contact</a></li>
   </ul>
+</nav>
+
+<div class="content" id="content-area">
+  <!-- Le contenu apparaîtra ici -->
+  <p>Bienvenue sur le site. Cliquez sur un menu pour voir le contenu.</p>
 </div>
 
-
-  <script>
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      window.location.href = 'index.html';
-    } else {
-      document.getElementById('userName').textContent = user.name;
+<script>
+  function showContent(menu) {
+    const contentArea = document.getElementById('content-area');
+    
+    if (menu === 'formation') {
+      contentArea.innerHTML = `
+        <h2>Nos Formations</h2>
+        <p>Découvrez nos formations en ligne sur le développement web, la data science, et plus encore.</p>
+        <ul>
+          <li>Formation HTML/CSS</li>
+          <li>Formation JavaScript</li>
+          <li>Formation Python</li>
+        </ul>
+      `;
+    } else if (menu === 'creation') {
+      contentArea.innerHTML = `
+        <h2>Création de compte</h2>
+        <p>Pour accéder à nos services, créez un compte en remplissant ce formulaire :</p>
+        <form>
+          <label>Nom : <input type="text" name="nom" required></label><br><br>
+          <label>Email : <input type="email" name="email" required></label><br><br>
+          <button type="submit">Créer un compte</button>
+        </form>
+      `;
+    } else if (menu === 'contact') {
+      contentArea.innerHTML = `
+        <h2>Contactez-nous</h2>
+        <p>Envoyez-nous un message via ce formulaire :</p>
+        <form>
+          <label>Message :<br><textarea rows="4" cols="40"></textarea></label><br><br>
+          <button type="submit">Envoyer</button>
+        </form>
+      `;
     }
-
-    function logoutUser() {
-      localStorage.removeItem('user');
-      window.location.href = 'index.html';
-    }
-
-    function toggleDrawer() {
-      const drawer = document.getElementById('navDrawer');
-      drawer.classList.toggle('open');
-    }
-  </script>
-  <script>
-  const countryOptions = {
-    Timebucks: ['Madagascar', 'USA / Canada'],
-    Microworkers: ['USA / Canada', 'Inde', 'Pakistan'],
-    Sproutgigs: ['France', 'Côte d’Ivoire'],
-    Seosprint: ['Russie', 'Ukraine'],
-    Socpublic: ['Madagascar', 'Algérie', 'Tunisie']
-  };
-
-  function toggleDrawer() {
-    const drawer = document.getElementById('navDrawer');
-    drawer.classList.toggle('open');
-  }
-
-  function toggleSubMenu(id) {
-    const submenu = document.getElementById(id);
-    submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
-  }
-
-  function selectPlatform(platform) {
-    const countries = countryOptions[platform] || [];
-    const countryMenu = document.getElementById('countryMenu');
-    countryMenu.innerHTML = '';
-    countries.forEach(country => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = '#';
-      a.textContent = country;
-      li.appendChild(a);
-      countryMenu.appendChild(li);
-    });
-    document.getElementById('countryMenu').style.display = 'block';
   }
 </script>
 
