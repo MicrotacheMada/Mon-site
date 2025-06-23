@@ -63,6 +63,31 @@
     <p>Vous êtes connecté.</p>
     <button onclick="logoutUser()">Déconnexion</button>
   </div>
+  <div class="drawer" id="navDrawer">
+  <ul>
+    <li>
+      <a href="#" onclick="toggleSubMenu('platformMenu')">Formation ▾</a>
+      <ul id="platformMenu" style="display:none; list-style:none; padding-left:1rem;">
+        <li><a href="#" onclick="selectPlatform('Timebucks')">Timebucks</a></li>
+        <li><a href="#" onclick="selectPlatform('Microworkers')">Microworkers</a></li>
+        <li><a href="#" onclick="selectPlatform('Sproutgigs')">Sproutgigs</a></li>
+        <li><a href="#" onclick="selectPlatform('Seosprint')">Seosprint</a></li>
+        <li><a href="#" onclick="selectPlatform('Socpublic')">Socpublic</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" onclick="toggleSubMenu('countryMenu')">Pays ▾</a>
+      <ul id="countryMenu" style="display:none; list-style:none; padding-left:1rem;">
+        <!-- Pays dynamiques ici -->
+      </ul>
+    </li>
+    <li><a href="register.html">Création Compte</a></li>
+    <li><a href="#">Proxy</a></li>
+    <li><a href="#">Numéro Virtuel</a></li>
+    <li><a href="#">Admis</a></li>
+  </ul>
+</div>
+
 
   <script>
     const user = JSON.parse(localStorage.getItem('user'));
