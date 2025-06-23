@@ -5,13 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tableau de bord</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .nav-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 250px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+      padding: 2rem 1rem;
+      transition: right 0.3s ease;
+      z-index: 1000;
+    }
+    .drawer.open {
+      right: 0;
+    }
+    .drawer ul {
+      list-style: none;
+      padding: 0;
+    }
+    .drawer ul li {
+      margin: 1rem 0;
+    }
+    .drawer ul li a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
+  <button class="nav-toggle" onclick="toggleDrawer()">Menu</button>
+  <div class="drawer" id="navDrawer">
+    <ul>
+      <li><a href="#">Formation</a></li>
+      <li><a href="register.html">Création Compte</a></li>
+      <li><a href="#">Proxy</a></li>
+      <li><a href="#">Numéro Virtuel</a></li>
+      <li><a href="#">Admis</a></li>
+    </ul>
+  </div>
+
   <div class="container">
     <h2>Bienvenue, <span id="userName"></span> !</h2>
     <p>Vous êtes connecté.</p>
     <button onclick="logoutUser()">Déconnexion</button>
   </div>
+
   <script>
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) {
@@ -19,9 +71,15 @@
     } else {
       document.getElementById('userName').textContent = user.name;
     }
+
     function logoutUser() {
       localStorage.removeItem('user');
       window.location.href = 'index.html';
+    }
+
+    function toggleDrawer() {
+      const drawer = document.getElementById('navDrawer');
+      drawer.classList.toggle('open');
     }
   </script>
 </body>
