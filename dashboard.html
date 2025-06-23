@@ -46,6 +46,9 @@
     }
   </style>
 </head>
+
+  <script>
+  
 <body>
   <button class="nav-toggle" onclick="toggleDrawer()">Menu</button>
   <div class="drawer" id="navDrawer">
@@ -107,5 +110,40 @@
       drawer.classList.toggle('open');
     }
   </script>
+  <script>
+  const countryOptions = {
+    Timebucks: ['Madagascar', 'USA / Canada'],
+    Microworkers: ['USA / Canada', 'Inde', 'Pakistan'],
+    Sproutgigs: ['France', 'Côte d’Ivoire'],
+    Seosprint: ['Russie', 'Ukraine'],
+    Socpublic: ['Madagascar', 'Algérie', 'Tunisie']
+  };
+
+  function toggleDrawer() {
+    const drawer = document.getElementById('navDrawer');
+    drawer.classList.toggle('open');
+  }
+
+  function toggleSubMenu(id) {
+    const submenu = document.getElementById(id);
+    submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function selectPlatform(platform) {
+    const countries = countryOptions[platform] || [];
+    const countryMenu = document.getElementById('countryMenu');
+    countryMenu.innerHTML = '';
+    countries.forEach(country => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = country;
+      li.appendChild(a);
+      countryMenu.appendChild(li);
+    });
+    document.getElementById('countryMenu').style.display = 'block';
+  }
+</script>
+
 </body>
 </html>
